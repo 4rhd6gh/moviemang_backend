@@ -51,9 +51,11 @@ export async function join(req, res) {
   const { nickname, userSub, accessToken, loginType } = req.body;
   let proveUserSub;
   if (loginType === "google") {
-    proveUserSub = await util.getGoogleIdentification(tokens.accessToken);
+    proveUserSub = await util.getGoogleIdentification(accessToken);
   } else if (loginType === "kakao") {
+    proveUserSub = await util.getKakaoIdentification(accessToken);
   } else if (loginType === "naver") {
+    proveUserSub = await util.getNaverIdentification(accessToken);
   } else {
     return res.status(400).json({ message: "잘못된 로그인 수단입니다." });
   }
