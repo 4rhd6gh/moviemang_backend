@@ -105,3 +105,5 @@ dist
 
 # VSCode directory
 .vscodes
+
+sql.sql
