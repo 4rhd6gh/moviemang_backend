@@ -78,6 +78,10 @@ export async function join(req, res) {
   }
 }
 
+export function logout(req, res) {
+  res.status(204).json({ message: "Logout success" });
+}
+
 function createTokens(tokens, userSub) {
   const accessToken = tokens.accessToken;
   const refreshToken = tokens.refreshToken;
