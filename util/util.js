@@ -13,6 +13,30 @@ const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
 const NAVER_REDIRECT_URL = process.env.NAVER_REDIRECT_URL;
 
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+
+export function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, ACCESS_TOKEN_SECRET, (err) => {
+    if (err) return res.sendStatus(403);
+    next();
+  });
+}
+
+export function getUserSubFormToken(req) {
+  const authHeader = req.headers["authorization"];
+
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return null;
+
+  const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET);
+  return decoded.userSub;
+}
+
 export async function getGoogleTokens(code) {
   const client = new OAuth2Client(
     GOOGLE_CLIENT_ID,
