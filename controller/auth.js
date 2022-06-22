@@ -34,6 +34,7 @@ export async function login(req, res) {
       token: resTokens.token,
       refreshToken: resTokens.refreshToken,
       nickname: userInfo.nickname,
+      loginType,
     });
   } else {
     //유저 정보 없을 경우 유저 생성
