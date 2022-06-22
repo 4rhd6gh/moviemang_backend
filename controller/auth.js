@@ -45,6 +45,7 @@ export async function login(req, res) {
       message: "닉네임을 설정해 주세요.",
       accessToken,
       userSub,
+      loginType,
     });
   }
 }
