@@ -52,6 +52,7 @@ export async function login(req, res) {
 
 export async function join(req, res) {
   const { nickname, userSub, accessToken, loginType } = req.body;
+  console.log(nickname, userSub, accessToken, loginType);
   let proveUserSub;
   if (loginType === "google") {
     proveUserSub = await util.getGoogleIdentification(accessToken);
