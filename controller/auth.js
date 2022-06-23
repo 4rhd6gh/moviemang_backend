@@ -44,6 +44,7 @@ export async function login(req, res) {
       status: "noUser",
       message: "닉네임을 설정해 주세요.",
       accessToken,
+      refreshToken,
       userSub,
       loginType,
     });
@@ -51,8 +52,8 @@ export async function login(req, res) {
 }
 
 export async function join(req, res) {
-  const { nickname, userSub, accessToken, loginType } = req.body;
-  console.log(nickname, userSub, accessToken, loginType);
+  const { nickname, userSub, accessToken, loginType, refreshToken } = req.body;
+
   let proveUserSub;
   if (loginType === "google") {
     proveUserSub = await util.getGoogleIdentification(accessToken);
@@ -68,10 +69,11 @@ export async function join(req, res) {
     const insertId = await authModel.createUserInfo(nickname, userSub);
     // 토큰 생성
     const resTokens = createTokens(accessToken, proveUserSub);
+    console.log(resTokens);
     return res.status(200).json({
       message: "회원가입 성공",
       token: resTokens.token,
-      refreshToken: resTokens.refreshToken,
+      refreshToken: refreshToken,
       nickname: nickname,
     });
   } else {
