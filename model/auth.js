@@ -6,7 +6,8 @@ export async function getUserInfo(userId) {
 }
 
 export async function createUserInfo(nickname, userSub) {
-  const query = "INSERT INTO tb_user VALUES (?, ?, '', 'active', NOW(),NOW() )";
+  const query =
+    "INSERT INTO tb_user ( userSub, nickname, profile, status, created, updated ) VALUES (?, ?, '', 'A', NOW(),NOW() )";
   return db
     .execute(query, [userSub, nickname])
     .then((result) => result[0].insertId);
