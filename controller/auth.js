@@ -67,7 +67,7 @@ export async function join(req, res) {
     // 유저 정보 생성
     const insertId = await authModel.createUserInfo(nickname, userSub);
     // 토큰 생성
-    const resTokens = createTokens(tokens, proveUserSub);
+    const resTokens = createTokens(accessToken, proveUserSub);
     return res.status(200).json({
       message: "회원가입 성공",
       token: resTokens.token,
