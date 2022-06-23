@@ -1,7 +1,7 @@
 import { db } from "./database.js";
 
 export async function getUserInfo(userId) {
-  const query = "SELECT * FROM tb_user WHERE id = ?";
+  const query = "SELECT * FROM tb_user WHERE userSub = ?";
   return db.execute(query, [userId]).then((result) => result[0][0]);
 }
 
