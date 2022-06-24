@@ -61,28 +61,32 @@ export async function getGoogleIdentification(accessToken) {
 }
 
 export async function getKakaoTokens(code) {
-  const headers = {
-    "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-  };
-  const body = {
-    grant_type: "authorization_code",
-    client_id: KAKAO_CLIENT_ID,
-    redirect_uri: KAKAO_REDIRECT_URL,
-    code,
-    client_secret: KAKAO_CLIENT_SECRET,
-  };
-  const response = await axios({
-    method: "post",
-    url: "https://kauth.kakao.com/oauth/token",
-    params: body,
-    headers,
-    data: body,
-  });
-  const json = await response.data;
-  const accessToken = json.access_token;
-  const refreshToken = json.refresh_token;
+  try {
+    const headers = {
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+    };
+    const body = {
+      grant_type: "authorization_code",
+      client_id: KAKAO_CLIENT_ID,
+      redirect_uri: KAKAO_REDIRECT_URL,
+      code,
+      client_secret: KAKAO_CLIENT_SECRET,
+    };
+    const response = await axios({
+      method: "post",
+      url: "https://kauth.kakao.com/oauth/token",
+      params: body,
+      headers,
+      data: body,
+    });
+    const json = await response.data;
+    const accessToken = json.access_token;
+    const refreshToken = json.refresh_token;
 
-  return { accessToken, refreshToken };
+    return { accessToken, refreshToken };
+  } catch (e) {
+    return e;
+  }
 }
 
 export async function getKakaoIdentification(accessToken) {

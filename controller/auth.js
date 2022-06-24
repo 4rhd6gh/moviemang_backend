@@ -7,7 +7,8 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const JWT_EXPIRES_IN_DAYS = process.env.JWT_EXPIRES_IN_DAYS;
 
 export async function login(req, res) {
-  const { loginType, code, status } = req.body;
+  const { loginType, code } = req.body;
+  console.log("client에서 오는 값들", loginType, code);
   let tokens;
   let userSub;
   //로그인 수단별 분기 로직
@@ -40,6 +41,7 @@ export async function login(req, res) {
     //유저 정보 없을 경우 유저 생성
     //TODO 보안 고려 - 닉네임 서버에서 다시 받을 시 client에서 요구할 파라미터 정의 필요
     const accessToken = tokens.accessToken;
+    const refreshToken = tokens.refreshToken;
     return res.status(200).json({
       status: "noUser",
       message: "닉네임을 설정해 주세요.",
@@ -53,7 +55,14 @@ export async function login(req, res) {
 
 export async function join(req, res) {
   const { nickname, userSub, accessToken, loginType, refreshToken } = req.body;
-
+  console.log(
+    "client에서 오는 값들",
+    nickname,
+    userSub,
+    accessToken,
+    loginType,
+    refreshToken
+  );
   let proveUserSub;
   if (loginType === "google") {
     proveUserSub = await util.getGoogleIdentification(accessToken);
