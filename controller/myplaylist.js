@@ -4,15 +4,14 @@ import * as myplaylistModel from "../model/myplaylist.js";
 
 export async function createPlayList(req, res) {
   const userSub = util.getUserSubFormToken(req);
-
-  const { playlistName, playlistTitle, playlistDesc } = req.body;
+  //const userSub = "dsfsd";
+  const { playlistTitle, playlistDesc } = req.body;
   const playlistId =
     userSub + new Date().getTime() + Math.floor(Math.random() * 100);
 
   const newPlaylistId = await myplaylistModel.createPlayList(
     playlistId,
     userSub,
-    playlistName,
     playlistTitle,
     playlistDesc
   );
