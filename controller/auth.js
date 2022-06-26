@@ -98,6 +98,7 @@ export function logout(req, res) {
 function createTokens(tokens, userSub) {
   const accessToken = tokens.accessToken;
   const refreshToken = tokens.refreshToken;
+  console.log(userSub);
   const token = jwt.sign({ userSub, accessToken }, ACCESS_TOKEN_SECRET, {
     expiresIn: JWT_EXPIRES_IN_DAYS,
   });
