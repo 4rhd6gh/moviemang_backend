@@ -29,7 +29,7 @@ export async function login(req, res) {
   const userInfo = await authModel.getUserInfo(userSub);
   if (userInfo) {
     //유저 아이디가 있다면 토큰 생성
-    const resTokens = createTokens(tokens, userInfo.id);
+    const resTokens = createTokens(tokens, userInfo.userSub);
     return res.status(200).json({
       message: "로그인 성공",
       token: resTokens.token,
