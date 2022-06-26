@@ -35,6 +35,7 @@ export function getUserSubFormToken(req) {
   if (token == null) return null;
 
   const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET);
+  console.log(decoded);
   return decoded.userSub;
 }
 
