@@ -10,5 +10,6 @@ router.use((req, res, next) => {
 });
 
 router.post("/playlist", myplaylistController.createPlayList);
+router.post("/movie", myplaylistController.createPlMovie);
 
 export default router;

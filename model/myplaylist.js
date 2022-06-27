@@ -12,3 +12,16 @@ export async function createPlayList(
     .execute(query, [playlistId, userSub, playlistTitle, playlistDesc])
     .then((result) => result[0][0]);
 }
+
+export async function createPlMovie(
+  playlistId,
+  mvTitle,
+  mvPosterPath,
+  mvDirector
+) {
+  const query =
+    "INSERT INTO tb_plmovie ( playlistId, mvTitle, mvPosterPath, mvDirector, created, updated ) VALUES (?, ?, ?, ?, NOW(),NOW() )";
+  return db
+    .execute(query, [playlistId, mvTitle, mvPosterPath, mvDirector])
+    .then((result) => result[0][0]);
+}

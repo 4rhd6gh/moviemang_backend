@@ -9,15 +9,6 @@ export async function createPlayList(req, res) {
 
   const playlistId =
     userSub + new Date().getTime() + Math.floor(Math.random() * 100);
-
-  console.log(
-    "client values----",
-    userSub,
-    playlistTitle,
-    playlistDesc,
-    playlistId
-  );
-
   const newPlaylistId = await myplaylistModel.createPlayList(
     playlistId,
     userSub,
@@ -28,5 +19,21 @@ export async function createPlayList(req, res) {
   return res.status(200).json({
     newPlaylistId,
     message: `playlist가 생성되었습니다.`,
+  });
+}
+
+export async function createPlMovie(req, res) {
+  const { playlistId, mvTitle, mvPosterPath, mvDirector } = req.body;
+
+  const newPlmovieId = await myplaylistModel.createPlMovie(
+    playlistId,
+    mvTitle,
+    mvPosterPath,
+    mvDirector
+  );
+
+  return res.status(200).json({
+    newPlmovieId,
+    message: `playlist에 영화가 추가되었습니다.`,
   });
 }
