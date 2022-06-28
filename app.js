@@ -3,7 +3,6 @@ import cors from "cors";
 import authRouter from "./routes/auth.js";
 import playlistRouter from "./routes/playlist.js";
 import myplaylistRouter from "./routes/myplaylist.js";
-import movieRouter from "";
 
 const app = express();
 app.use(express.json());

@@ -25,3 +25,9 @@ export async function createPlMovie(
     .execute(query, [playlistId, mvTitle, mvPosterPath, mvDirector])
     .then((result) => result[0][0]);
 }
+
+export async function getPlayList(userSub) {
+  const query =
+    "SELECT * FROM tb_playlist WHERE userSub = ? ORDER BY created DESC";
+  return db.execute(query, [userSub]).then((result) => result[0]);
+}

@@ -20,10 +20,12 @@ export function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
 
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
+  if (token == null)
+    return res.status(401).json({ message: "token이 존재하지 않습니다." });
 
   jwt.verify(token, ACCESS_TOKEN_SECRET, (err) => {
-    if (err) return res.sendStatus(403);
+    if (err)
+      return res.status(403).json({ message: "token이 유효하지 않습니다." });
     next();
   });
 }
