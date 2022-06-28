@@ -40,9 +40,9 @@ export async function createPlMovie(req, res) {
 
 export async function getPlayList(req, res) {
   const userSub = util.getUserSubFormToken(req);
-
+  console.log("getPlayList userSub: ", userSub);
   const playList = await myplaylistModel.getPlayList(userSub);
-
+  console.log(playList);
   return res.status(200).json({
     playList,
     message: `playlist를 조회 성공`,
