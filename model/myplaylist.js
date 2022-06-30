@@ -31,3 +31,8 @@ export async function getPlayList(userSub) {
     "SELECT * FROM tb_playlist WHERE userSub = ? ORDER BY created DESC";
   return db.execute(query, [userSub]).then((result) => result[0]);
 }
+
+export async function getPlayListMovie(playlistId) {
+  const query = "SELECT * FROM tb_playlist WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0]);
+}
