@@ -25,6 +25,7 @@ export async function createPlayList(req, res) {
 export async function createPlMovie(req, res) {
   const { playlistId, mvTitle, mvPosterPath, mvDirector } = req.body;
 
+  console.log(playlistId, mvTitle, mvPosterPath, mvDirector);
   const newPlmovieId = await myplaylistModel.createPlMovie(
     playlistId,
     mvTitle,
