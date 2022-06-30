@@ -26,6 +26,7 @@ export async function createPlMovie(req, res) {
   const { playlistId, mvTitle, mvPosterPath, mvDirector } = req.body;
 
   const existPlaylist = await myplaylistModel.getPlayList(playlistId);
+  console.log("existPlaylist", existPlaylist);
 
   if (!existPlaylist) {
     return res.status(400).json({
