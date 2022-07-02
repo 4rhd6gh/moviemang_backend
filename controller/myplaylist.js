@@ -29,7 +29,7 @@ export async function createPlMovie(req, res) {
   console.log("existPlaylist", existPlaylist);
 
   if (existPlaylist && existPlaylist.length !== 0) {
-    return res.status(400).json({
+    return res.status(200).json({
       message: `playlistId에 해당 영화가 이미 존재합니다.`,
     });
   }
