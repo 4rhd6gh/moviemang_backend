@@ -33,6 +33,6 @@ export async function getPlayList(userSub) {
 }
 
 export async function getPlayListMovie(playlistId) {
-  const query = "SELECT * FROM tb_playlist WHERE playlistId = ?";
+  const query = "SELECT * FROM tb_plmovie WHERE playlistId = ?";
   return db.execute(query, [playlistId]).then((result) => result[0]);
 }
