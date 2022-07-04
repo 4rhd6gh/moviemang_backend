@@ -39,5 +39,5 @@ export async function getPlayListMovie(playlistId) {
 
 export async function getTags() {
   const query = "SELECT tagName FROM tb_tag";
-  return db.execute(query, [playlistId]).then((result) => result[0]);
+  return db.execute(query).then((result) => result[0]);
 }
