@@ -12,5 +12,5 @@ router.use((req, res, next) => {
 router.post("/playlist", myplaylistController.createPlayList);
 router.post("/movie", myplaylistController.createPlMovie);
 router.get("/playlist", myplaylistController.getPlayList);
-
+router.get("/tag", myplaylistController.getTags);
 export default router;

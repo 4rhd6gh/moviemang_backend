@@ -36,3 +36,8 @@ export async function getPlayListMovie(playlistId) {
   const query = "SELECT * FROM tb_plmovie WHERE playlistId = ?";
   return db.execute(query, [playlistId]).then((result) => result[0]);
 }
+
+export async function getTags() {
+  const query = "SELECT tagName FROM tb_tag";
+  return db.execute(query, [playlistId]).then((result) => result[0]);
+}

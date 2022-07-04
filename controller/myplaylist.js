@@ -57,3 +57,12 @@ export async function getPlayList(req, res) {
     message: `playlist를 조회 성공`,
   });
 }
+
+export async function getTags(req, res) {
+  const tags = await myplaylistModel.getTags();
+
+  return res.status(200).json({
+    tags,
+    message: `playlist를 조회 성공`,
+  });
+}
