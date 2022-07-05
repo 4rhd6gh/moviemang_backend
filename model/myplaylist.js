@@ -4,13 +4,31 @@ export async function createPlayList(
   playlistId,
   userSub,
   playlistTitle,
-  playlistDesc
+  playlistDesc,
+  tags
 ) {
   const query =
     "INSERT INTO tb_playlist ( playlistId, userSub, playlistTitle, playlistDesc, created, updated ) VALUES (?, ?, ?, ?, NOW(),NOW() )";
-  return db
-    .execute(query, [playlistId, userSub, playlistTitle, playlistDesc])
-    .then((result) => result[0][0]);
+
+  try {
+    await db.query("START TRANSACTION");
+    const insId = await db.query(query, [
+      playlistId,
+      userSub,
+      playlistTitle,
+      playlistDesc,
+    ]);
+    await db.query(
+      "INSERT INTO tb_playlist_tag ( playlistId, tagame ) VALUES ?",
+      [tags.map((tag) => [playlistId, tag])]
+    );
+    await db.query("COMMIT");
+    return insId;
+  } catch (err) {
+    console.log(err);
+    await db.query("ROLLBACK");
+    throw err;
+  }
 }
 
 export async function createPlMovie(
@@ -21,6 +39,7 @@ export async function createPlMovie(
 ) {
   const query =
     "INSERT INTO tb_plmovie ( playlistId, mvTitle, mvPosterPath, mvDirector, created, updated ) VALUES (?, ?, ?, ?, NOW(),NOW() )";
+
   return db
     .execute(query, [playlistId, mvTitle, mvPosterPath, mvDirector])
     .then((result) => result[0][0]);
