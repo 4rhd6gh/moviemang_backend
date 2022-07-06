@@ -19,7 +19,7 @@ export async function createPlayList(
       playlistDesc,
     ]);
     await db.query(
-      "INSERT INTO tb_playlist_tag ( playlistId, tagame ) VALUES ?",
+      "INSERT INTO tb_playlist_tag ( playlistId, tagName ) VALUES ?",
       [tags.map((tag) => [playlistId, tag])]
     );
     await db.query("COMMIT");
