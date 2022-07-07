@@ -31,7 +31,6 @@ export async function createPlMovie(req, res) {
   const { playlistId, mvTitle, mvPosterPath, mvDirector } = req.body;
 
   const existPlaylist = await myplaylistModel.getPlayListMovie(playlistId);
-  console.log("existPlaylist", existPlaylist);
 
   if (existPlaylist && existPlaylist.length !== 0) {
     return res.status(200).json({
@@ -54,9 +53,22 @@ export async function createPlMovie(req, res) {
 
 export async function getPlayList(req, res) {
   const userSub = util.getUserSubFormToken(req);
-  console.log("getPlayList userSub: ", userSub);
-  const playList = await myplaylistModel.getPlayList(userSub);
-  console.log(playList);
+
+  const { page, limit } = req.query;
+
+  const playList = await myplaylistModel.getPlayList(userSub, page, limit);
+
+  if (playList.length > 0) {
+    playList.map((playlist) => {
+      playlist.movies = await myplaylistModel.getPlayListMovie(playlist.playlistId);
+      return playlist;
+    });
+    playList.map((playlist) => {
+      playlist.tags = await myplaylistModel.getPlayListTag(playlist.playlistId);
+      return playlist;
+    });
+  }
+
   return res.status(200).json({
     playList,
     message: `playlist를 조회 성공`,

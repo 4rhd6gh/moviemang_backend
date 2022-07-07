@@ -45,14 +45,19 @@ export async function createPlMovie(
     .then((result) => result[0][0]);
 }
 
-export async function getPlayList(userSub) {
+export async function getPlayList(userSub, page, limit) {
   const query =
-    "SELECT * FROM tb_playlist WHERE userSub = ? ORDER BY created DESC";
-  return db.execute(query, [userSub]).then((result) => result[0]);
+    "SELECT * FROM tb_playlist WHERE userSub = ? ORDER BY created DESC LIMIT ?,?";
+  return db.execute(query, [userSub, page, limit]).then((result) => result[0]);
 }
 
 export async function getPlayListMovie(playlistId) {
   const query = "SELECT * FROM tb_plmovie WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0]);
+}
+
+export async function getPlayListTag(playlistId) {
+  const query = "SELECT * FROM tb_playlist_tag WHERE playlistId = ?";
   return db.execute(query, [playlistId]).then((result) => result[0]);
 }
 
