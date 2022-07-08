@@ -59,6 +59,7 @@ export async function getPlayList(req, res) {
   const playList = await myplaylistModel.getPlayList(userSub, page, limit);
 
   if (playList.length > 0) {
+    console.log("playlist 조회 성공");
     playList.map(async (playlist) => {
       playlist.movies = await myplaylistModel.getPlayListMovie(
         playlist.playlistId
