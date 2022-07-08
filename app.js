@@ -13,7 +13,7 @@ app.use(cors());
 app.use("/auth", authRouter);
 app.use("/playlist", playlistRouter);
 app.use("/myplaylist", myplaylistRouter);
-app.use("user", userRouter);
+app.use("/user", userRouter);
 
 // 500 Error Handler
 app.use((err, req, res, next) => {
