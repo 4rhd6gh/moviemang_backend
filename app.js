@@ -3,6 +3,7 @@ import cors from "cors";
 import authRouter from "./routes/auth.js";
 import playlistRouter from "./routes/playlist.js";
 import myplaylistRouter from "./routes/myplaylist.js";
+import userRouter from "./routes/user.js";
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use(cors());
 app.use("/auth", authRouter);
 app.use("/playlist", playlistRouter);
 app.use("/myplaylist", myplaylistRouter);
+app.use("user", userRouter);
 
 // 500 Error Handler
 app.use((err, req, res, next) => {
