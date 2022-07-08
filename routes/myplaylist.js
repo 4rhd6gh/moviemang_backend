@@ -30,5 +30,6 @@ router.post(
 );
 router.post("/movie", myplaylistController.createPlMovie);
 router.get("/playlist", myplaylistController.getPlayList);
+router.get("/playlistForCreate", myplaylistController.getPlayListForCreate);
 router.get("/tag", myplaylistController.getTags);
 export default router;

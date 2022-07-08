@@ -51,25 +51,40 @@ export async function createPlMovie(req, res) {
   });
 }
 
+export async function getPlayListForCreate(req, res) {
+  const userSub = util.getUserSubFormToken(req);
+  const { page, limit } = req.query;
+  const playListArray = await myplaylistModel.getPlayList(userSub, page, limit);
+  console.log(playListArray);
+
+  return res.status(200).json({
+    playListArray,
+  });
+}
+
 export async function getPlayList(req, res) {
   const userSub = util.getUserSubFormToken(req);
 
   const { page, limit } = req.query;
 
-  const playList = await myplaylistModel.getPlayList(userSub, page, limit);
+  let playList = await myplaylistModel.getPlayList(userSub, page, limit);
 
   if (playList.length > 0) {
     console.log("playlist 조회 성공");
-    playList.map(async (playlist) => {
-      playlist.movies = await myplaylistModel.getPlayListMovie(
-        playlist.playlistId
+
+    for (let i = 0; i < playList.length; i++) {
+      const playListMovie = await myplaylistModel.getPlayListMovie(
+        playList[i].playlistId
       );
-      return playlist;
-    });
-    playList.map(async (playlist) => {
-      playlist.tags = await myplaylistModel.getPlayListTag(playlist.playlistId);
-      return playlist;
-    });
+      playList[i].movies = playListMovie;
+    }
+
+    for (let i = 0; i < playList.length; i++) {
+      const playListTag = await myplaylistModel.getPlayListTag(
+        playList[i].playlistId
+      );
+      playList[i].tags = playListTag;
+    }
   }
 
   return res.status(200).json({
