@@ -59,11 +59,13 @@ export async function getPlayList(req, res) {
   const playList = await myplaylistModel.getPlayList(userSub, page, limit);
 
   if (playList.length > 0) {
-    playList.map((playlist) => {
-      playlist.movies = await myplaylistModel.getPlayListMovie(playlist.playlistId);
+    playList.map(async (playlist) => {
+      playlist.movies = await myplaylistModel.getPlayListMovie(
+        playlist.playlistId
+      );
       return playlist;
     });
-    playList.map((playlist) => {
+    playList.map(async (playlist) => {
       playlist.tags = await myplaylistModel.getPlayListTag(playlist.playlistId);
       return playlist;
     });
