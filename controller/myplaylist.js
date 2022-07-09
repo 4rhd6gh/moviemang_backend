@@ -28,11 +28,11 @@ export async function createPlayList(req, res) {
 }
 
 export async function createPlMovie(req, res) {
-  const { playlistId, mvTitle, mvPosterPath, mvDirector } = req.body;
+  const { playlistId, mvTitle, mvPosterPath, mvDirector, tm_id } = req.body;
+  console.log("tm_id", tm_id);
+  const existPlaylist = await myplaylistModel.getPlMovie(tm_id);
 
-  const existPlaylist = await myplaylistModel.getPlayListMovie(playlistId);
-
-  if (existPlaylist && existPlaylist.length !== 0) {
+  if (existPlaylist && existPlaylist.tm_id === tm_id) {
     return res.status(200).json({
       message: `playlistId에 해당 영화가 이미 존재합니다.`,
     });
@@ -42,7 +42,8 @@ export async function createPlMovie(req, res) {
     playlistId,
     mvTitle,
     mvPosterPath,
-    mvDirector
+    mvDirector,
+    tm_id
   );
 
   return res.status(200).json({

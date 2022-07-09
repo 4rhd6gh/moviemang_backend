@@ -35,13 +35,14 @@ export async function createPlMovie(
   playlistId,
   mvTitle,
   mvPosterPath,
-  mvDirector
+  mvDirector,
+  tm_id
 ) {
   const query =
-    "INSERT INTO tb_plmovie ( playlistId, mvTitle, mvPosterPath, mvDirector, created, updated ) VALUES (?, ?, ?, ?, NOW(),NOW() )";
+    "INSERT INTO tb_plmovie ( playlistId, mvTitle, mvPosterPath, mvDirector, tm_id, created, updated ) VALUES (?, ?, ?, ?,?, NOW(),NOW() )";
 
   return db
-    .execute(query, [playlistId, mvTitle, mvPosterPath, mvDirector])
+    .execute(query, [playlistId, mvTitle, mvPosterPath, mvDirector, tm_id])
     .then((result) => result[0][0]);
 }
 
@@ -55,6 +56,11 @@ export async function getPlayList(userSub, page, limit) {
 export async function getPlayListMovie(playlistId) {
   const query = "SELECT * FROM tb_plmovie WHERE playlistId = ?";
   return db.execute(query, [playlistId]).then((result) => result[0]);
+}
+
+export async function getPlMovie(tm_id) {
+  const query = "SELECT * FROM tb_plmovie WHERE tm_id = ?";
+  return db.execute(query, [tm_id]).then((result) => result[0][0]);
 }
 
 export async function getPlayListTag(playlistId) {
