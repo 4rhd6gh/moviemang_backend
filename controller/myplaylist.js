@@ -56,7 +56,6 @@ export async function getPlayListForCreate(req, res) {
   const userSub = util.getUserSubFormToken(req);
   const { page, limit } = req.query;
   const playListArray = await myplaylistModel.getPlayList(userSub, page, limit);
-  console.log(playListArray);
 
   return res.status(200).json({
     playListArray,
@@ -67,12 +66,11 @@ export async function getPlayList(req, res) {
   const userSub = util.getUserSubFormToken(req);
 
   const { page, limit } = req.query;
-
-  let playList = await myplaylistModel.getPlayList(userSub, page, limit);
+  console.log(page, limit);
+  let newPage = page;
+  let playList = await myplaylistModel.getPlayList(userSub, newPage, limit);
 
   if (playList.length > 0) {
-    console.log("playlist 조회 성공");
-
     for (let i = 0; i < playList.length; i++) {
       const playListMovie = await myplaylistModel.getPlayListMovie(
         playList[i].playlistId

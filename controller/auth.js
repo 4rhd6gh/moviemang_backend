@@ -83,6 +83,7 @@ export async function join(req, res) {
       token: resTokens.token,
       refreshToken: refreshToken,
       nickname: nickname,
+      loginType,
     });
   } else {
     return res

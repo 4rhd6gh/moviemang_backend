@@ -47,7 +47,7 @@ export async function createPlMovie(
 }
 
 export async function getPlayList(userSub, page, limit) {
-  console.log(userSub, page, limit);
+  console.log("page model---" + page);
   const query =
     "SELECT * FROM tb_playlist WHERE userSub = ? ORDER BY created DESC LIMIT ?,?";
   return db.execute(query, [userSub, page, limit]).then((result) => result[0]);
