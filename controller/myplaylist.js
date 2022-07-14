@@ -66,7 +66,9 @@ export async function getPlayList(req, res) {
   const userSub = util.getUserSubFormToken(req);
 
   const { page, limit } = req.query;
-  console.log(page, limit);
+
+  const totalCount = await myplaylistModel.getPlayListCount(userSub);
+
   let newPage = page;
   let playList = await myplaylistModel.getPlayList(userSub, newPage, limit);
 
@@ -85,8 +87,8 @@ export async function getPlayList(req, res) {
       playList[i].tags = playListTag;
     }
   }
-
   return res.status(200).json({
+    totalCount,
     playList,
     message: `playlist를 조회 성공`,
   });

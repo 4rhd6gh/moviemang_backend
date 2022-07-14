@@ -19,8 +19,8 @@ export async function createPlayList(
       playlistDesc,
     ]);
     await db.query(
-      "INSERT INTO tb_playlist_tag ( playlistId, tagName ) VALUES ?",
-      [tags.map((tag) => [playlistId, tag])]
+      "INSERT INTO tb_playlist_tag ( playlistId, tagName, created, updated ) VALUES ?",
+      [tags.map((tag) => [playlistId, tag, new Date(), new Date()])]
     );
     await db.query("COMMIT");
     return insId;
@@ -71,4 +71,9 @@ export async function getPlayListTag(playlistId) {
 export async function getTags() {
   const query = "SELECT tagName FROM tb_tag";
   return db.execute(query).then((result) => result[0]);
+}
+
+export async function getPlayListCount(userSub) {
+  const query = "SELECT COUNT(*) AS cnt FROM tb_playlist WHERE userSub = ?";
+  return db.execute(query, [userSub]).then((result) => result[0][0].cnt);
 }
