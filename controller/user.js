@@ -11,3 +11,13 @@ export async function updateNickname(req, res) {
     message: `닉네임이 수정되었습니다.`,
   });
 }
+
+export async function updateLike(req, res) {
+  const userSub = util.getUserSubFormToken(req);
+  const { like } = req.body;
+  const updated = await userModel.updateLike(like, userSub);
+  return res.status(200).json({
+    like,
+    message: `좋아요가 수정되었습니다.`,
+  });
+}
