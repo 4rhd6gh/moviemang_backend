@@ -23,7 +23,8 @@ pipeline {
             steps {
                 sh '''
                 echo "Docker RUN"
-                docker run -d ${GIT_COMMIT_TAG}
+                docker rm -f mmback
+                docker run -d -p 8000:8000 --name mmback ${GIT_COMMIT_TAG}
                 '''
             }
         }
