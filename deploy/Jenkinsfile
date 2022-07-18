@@ -11,7 +11,7 @@ pipeline {
         steps {
             sh '''
             echo "Building Docker Image"
-            ehco pwd
+            echo pwd
             echo "GIT_COMMIT_HASH: ${GIT_COMMIT_HASH}"
             echo "GIT_COMMIT_TAG: ${GIT_COMMIT_TAG}"
             docker build -t ${GIT_COMMIT_TAG} .
