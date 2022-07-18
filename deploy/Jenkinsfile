@@ -3,18 +3,19 @@ pipeline {
 
     environment{
         GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-        GIT_COMMIT_TAG = "echo $GIT_COMMIT_HASH | cut -c -8"
+        GIT_COMMIT_TAG = ${GIT_COMMIT_HASH.substring(0,8)}
     }
     
-    
-
-    
     stages {
-        stage('Build') {
+        stage('Docker Build') {
         steps {
-            sh "echo Git commit hash: ${GIT_COMMIT_HASH.substring(0,8)}"
-            sh "echo Git commit tag: ${GIT_COMMIT_TAG}"
-            sh 'echo "Hello World"'
+            sh '''
+            echo "Building Docker Image"
+            echo "GIT_COMMIT_HASH: ${GIT_COMMIT_HASH}"
+            echo "GIT_COMMIT_TAG: ${GIT_COMMIT_TAG}"
+            docker build -t ${GIT_COMMIT_TAG} .
+            docker tag ${GIT_COMMIT_TAG} ${GIT_COMMIT_TAG}:latest
+            '''
         }
         }
     }
