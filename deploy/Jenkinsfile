@@ -11,13 +11,21 @@ pipeline {
         steps {
             sh '''
             echo "Building Docker Image"
-            echo pwd
+            pwd
             echo "GIT_COMMIT_HASH: ${GIT_COMMIT_HASH}"
             echo "GIT_COMMIT_TAG: ${GIT_COMMIT_TAG}"
             docker build -t ${GIT_COMMIT_TAG} .
             docker tag ${GIT_COMMIT_TAG} ${GIT_COMMIT_TAG}:latest
             '''
+            }
         }
+        stage('Docker RUN') {
+            steps {
+                sh '''
+                echo "Docker RUN"
+                docker run -d ${GIT_COMMIT_TAG}
+                '''
+            }
         }
     }
 }
