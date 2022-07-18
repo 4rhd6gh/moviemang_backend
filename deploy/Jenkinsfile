@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    SCM_VAR = git branch:"master", url:"https://github.com/4rhd6gh/moviemang_backend.git"
+    SCM_VAR = git branch:"main", url:"https://github.com/4rhd6gh/moviemang_backend.git"
 
     echo "GIT_COMMIT: ${SCM_VAR.GIT_COMMIT}"
     echo "GIT_BRANCH: ${SCM_VAR.GIT_BRANCH}"
