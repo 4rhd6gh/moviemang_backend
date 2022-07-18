@@ -1,10 +1,12 @@
 pipeline {
     agent any
 
-    SCM_VAR = git branch:"main", url:"https://github.com/4rhd6gh/moviemang_backend.git"
+    environment{
+        GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+    }
+    
+    echo "Git commit hash: ${GIT_COMMIT_HASH}"
 
-    echo "GIT_COMMIT: ${SCM_VAR.GIT_COMMIT}"
-    echo "GIT_BRANCH: ${SCM_VAR.GIT_BRANCH}"
     
     stages {
         stage('Build') {
