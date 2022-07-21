@@ -8,7 +8,6 @@ const JWT_EXPIRES_IN_DAYS = process.env.JWT_EXPIRES_IN_DAYS;
 
 export async function login(req, res) {
   const { loginType, code } = req.body;
-  console.log("client에서 오는 값들", loginType, code);
   let tokens;
   let userSub;
   //로그인 수단별 분기 로직
@@ -55,14 +54,6 @@ export async function login(req, res) {
 
 export async function join(req, res) {
   const { nickname, userSub, accessToken, loginType, refreshToken } = req.body;
-  console.log(
-    "client에서 오는 값들",
-    nickname,
-    userSub,
-    accessToken,
-    loginType,
-    refreshToken
-  );
   let proveUserSub;
   if (loginType === "google") {
     proveUserSub = await util.getGoogleIdentification(accessToken);
