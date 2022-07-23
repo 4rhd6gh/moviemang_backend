@@ -11,14 +11,10 @@ pipeline {
     stages {
         stage('Docker Build') {
         steps {
-            dockerBuild('확인해보자')
+            dockerBuild("${GIT_COMMIT_TAG}")
             sh '''
             echo "Building Docker Image"
             pwd
-            echo "GIT_COMMIT_HASH: ${GIT_COMMIT_HASH}"
-            echo "GIT_COMMIT_TAG: ${GIT_COMMIT_TAG}"
-            docker build -t ${GIT_COMMIT_TAG} .
-            docker tag ${GIT_COMMIT_TAG} ${GIT_COMMIT_TAG}:latest
             '''
             }
         }
