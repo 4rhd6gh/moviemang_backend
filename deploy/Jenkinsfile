@@ -16,13 +16,21 @@ pipeline {
     
     stages {
         stage('Docker Build') {
-        steps {
-            echo 'Docker Image Build Start'
-            dockerBuild("${GIT_COMMIT_TAG}", "${GIT_PRE_COMMIT_TAG}","${SYSTEM_NAME}")
-            sh '''
-            echo "Building Docker Image"
-            pwd
-            '''
+            steps {
+                echo 'Docker Image Build Start'
+                dockerBuild("${GIT_COMMIT_TAG}", "${GIT_PRE_COMMIT_TAG}","${SYSTEM_NAME}")
+                sh '''
+                echo "Building Docker Image"
+                pwd
+                '''
+            }
+            post{
+                success {
+                    echo 'Docker Image Build Success'
+                }
+                failure {
+                    echo 'Docker Image Build Failed'
+                }
             }
         }
         stage('Docker RUN') {
