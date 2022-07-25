@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Docker Build') {
         steps {
-            dockerBuild("${GIT_COMMIT_TAG}", "${}")
+            dockerBuild("${GIT_COMMIT_TAG}", "${SYSTEM_NAME}")
             sh '''
             echo "Building Docker Image"
             pwd
