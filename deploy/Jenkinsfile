@@ -26,10 +26,10 @@ pipeline {
             }
             post{
                 success {
-                    echo 'Docker Image Build Success'
+                    echo 'Docker Image Build Success '
                 }
                 failure {
-                    echo 'Docker Image Build Failed'
+                    echo 'Docker Image Build Failed '
                 }
             }
         }
