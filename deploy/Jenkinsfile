@@ -41,6 +41,14 @@ pipeline {
                 docker run -d -p 8000:8000 --name mmback ${GIT_COMMIT_TAG}
                 '''
             }
+            post{
+                success {
+                    echo 'Docker Image Run Success '
+                }
+                failure {
+                    echo 'Docker Image Run Failed '
+                }
+            }
         }
     }
 }
