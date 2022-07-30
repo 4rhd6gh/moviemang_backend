@@ -15,40 +15,35 @@ pipeline {
     }
     
     stages {
-        stage('Docker Build') {
+        stage('STEP1----------------------------Docker Build!!!') {
             steps {
-                echo 'Docker Image Build Start'
-                dockerBuild("${GIT_COMMIT_TAG}", "${GIT_PRE_COMMIT_TAG}","${SYSTEM_NAME}")
-                sh '''
-                echo "Building Docker Image"
-                pwd
-                '''
-            }
-            post{
-                success {
-                    echo 'Docker Image Build Success '
-                }
-                failure {
-                    echo 'Docker Image Build Failed '
-                }
+                sh 'docker ps -f name=node-backend -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=node-backend -q | xargs -r docker container rm'
+                sh 'docker images -f node-backend:latest | xargs --no-run-if-empty docker rmi'
+                sh 'docker build -t node-backend:latest .'
             }
         }
-        stage('Docker RUN') {
+        stage('STEP2----------------------------Docker Run!!!') {
             steps {
-                sh '''
-                echo "Docker RUN"
-                docker rm -f mmback
-                docker run -d -p 8000:8000 --name mmback ${GIT_COMMIT_TAG}
-                '''
-            }
-            post{
-                success {
-                    echo 'Docker Image Run Success '
-                }
-                failure {
-                    echo 'Docker Image Run Failed '
-                }
+                sh 'docker images -qf dangling=true | xargs -I{} docker rmi {}' 
+                sh 'docker run -d --name backend -p 8000:8000 node-backend:latest'
             }
         }
+    post{
+        success {
+            slackSend(
+                channel: '#4-2_젠킨스_프론트엔드_빌드알림',
+                color: 'good',
+                message: '[Successful] Job:${SYSTEM_NAME} Commit:${GIT_COMMIT_HASH}'
+            )
+        }
+        failure{
+            slackSend(
+                channel: '#4-2_젠킨스_프론트엔드_빌드알림',
+                color: 'danger',
+                message: '[Failed] Job:${SYSTEM_NAME} Commit:${GIT_COMMIT_HASH}'
+            )
+        }
+    }
     }
 }
