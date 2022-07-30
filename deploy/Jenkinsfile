@@ -29,6 +29,7 @@ pipeline {
                 sh 'docker run -d --name backend -p 8000:8000 node-backend:latest'
             }
         }
+    }
     post{
         success {
             slackSend(
@@ -44,6 +45,5 @@ pipeline {
                 message: '[Failed] Job:${SYSTEM_NAME} Commit:${GIT_COMMIT_HASH}'
             )
         }
-    }
     }
 }
