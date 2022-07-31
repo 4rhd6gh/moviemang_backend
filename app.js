@@ -10,10 +10,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-app.use("/auth", authRouter);
-app.use("/playlist", playlistRouter);
-app.use("/myplaylist", myplaylistRouter);
-app.use("/user", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/playlist", playlistRouter);
+app.use("/api/myplaylist", myplaylistRouter);
+app.use("/api/user", userRouter);
 
 // 500 Error Handler
 app.use((err, req, res, next) => {
