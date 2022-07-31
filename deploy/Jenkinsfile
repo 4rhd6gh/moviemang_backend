@@ -23,7 +23,6 @@ pipeline {
         }
         stage('STEP2----------------------------Docker Run!!!') {
             steps {
-                sh 'docker images -qf dangling=true | xargs -I{} docker rmi {}' 
                 sh 'docker run -d --name backend -p 8000:8000 node-backend:latest'
             }
         }
