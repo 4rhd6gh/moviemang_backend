@@ -16,14 +16,14 @@ pipeline {
         stage('STEP1----------------------------Docker Build!!!') {
             steps {
                 sh 'docker ps -f name=node-backend -q | xargs --no-run-if-empty docker container stop'
-                sh 'docker container ls -a -fname=node-backend -q | xargs -r docker container rm'
+                sh 'docker container ls -a -fname=node-backend -q | xargs -r docker container rm -f'
                 sh 'docker images -f node-backend:latest | xargs --no-run-if-empty docker rmi -f'
                 sh 'docker build -t node-backend:latest .'
             }
         }
         stage('STEP2----------------------------Docker Run!!!') {
             steps {
-                sh 'docker run -d --name backend -p 8000:8000 node-backend:latest'
+                sh 'docker run -d --name backend -p 8000:8000 --network="host" node-backend:latest'
             }
         }
     }
