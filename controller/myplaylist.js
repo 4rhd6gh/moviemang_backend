@@ -106,6 +106,19 @@ export async function getTags(req, res) {
 export async function deletePlMovie(req, res) {
   const { playlistId, tm_id } = req.body;
   await myplaylistModel.deletePlMovie(playlistId, tm_id);
-
   res.status(204).json({ message: `삭제 완료` });
+}
+
+export async function likePlaylist(req, res) {
+  const userSub = util.getUserSubFormToken(req);
+  const { playlistId } = req.body;
+  await myplaylistModel.likePlaylist(playlistId, userSub);
+  res.status(204).json({ message: `좋아요 완료` });
+}
+
+export async function unlikePlaylist(req, res) {
+  const userSub = util.getUserSubFormToken(req);
+  const { playlistId } = req.body;
+  await myplaylistModel.unlikePlaylist(playlistId, userSub);
+  res.status(204).json({ message: `좋아요 취소 완료` });
 }

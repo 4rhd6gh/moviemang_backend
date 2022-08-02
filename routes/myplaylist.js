@@ -33,4 +33,6 @@ router.delete("/movie", myplaylistController.deletePlMovie);
 router.get("/playlist", myplaylistController.getPlayList);
 router.get("/playlistForCreate", myplaylistController.getPlayListForCreate);
 router.get("/tag", myplaylistController.getTags);
+router.post("/like", myplaylistController.likePlaylist);
+router.delete("/like", myplaylistController.unlikePlaylist);
 export default router;
