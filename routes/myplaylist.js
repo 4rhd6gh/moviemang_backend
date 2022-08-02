@@ -29,6 +29,7 @@ router.post(
   myplaylistController.createPlayList
 );
 router.post("/movie", myplaylistController.createPlMovie);
+router.delete("/movie", myplaylistController.deletePlMovie);
 router.get("/playlist", myplaylistController.getPlayList);
 router.get("/playlistForCreate", myplaylistController.getPlayListForCreate);
 router.get("/tag", myplaylistController.getTags);

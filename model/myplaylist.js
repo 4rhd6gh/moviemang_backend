@@ -76,3 +76,10 @@ export async function getPlayListCount(userSub) {
   const query = "SELECT COUNT(*) AS cnt FROM tb_playlist WHERE userSub = ?";
   return db.execute(query, [userSub]).then((result) => result[0][0].cnt);
 }
+
+export async function deletePlMovie(playlistId, tm_id) {
+  const query = "DELETE FROM tb_plmovie WHERE playlistId = ? AND tm_id = ?";
+  return db
+    .execute(query, [playlistId, tm_id])
+    .then((result) => result[0][0].cnt);
+}

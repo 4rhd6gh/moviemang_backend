@@ -102,3 +102,10 @@ export async function getTags(req, res) {
     message: `playlist를 조회 성공`,
   });
 }
+
+export async function deletePlMovie(req, res) {
+  const { playlistId, tm_id } = req.body;
+  await myplaylistModel.deletePlMovie(playlistId, tm_id);
+
+  res.status(204).json({ message: `삭제 완료` });
+}
