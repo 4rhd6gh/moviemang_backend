@@ -5,23 +5,28 @@ import * as authModel from "../model/auth.js";
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const JWT_EXPIRES_IN_DAYS = process.env.JWT_EXPIRES_IN_DAYS;
+const ENV = process.env.NODE_ENV;
 
 export async function login(req, res) {
   const { loginType, code } = req.body;
   let tokens;
   let userSub;
   //로그인 수단별 분기 로직
-  if (loginType === "google") {
-    tokens = await util.getGoogleTokens(code);
-    userSub = await util.getGoogleIdentification(tokens.accessToken);
-  } else if (loginType === "kakao") {
-    tokens = await util.getKakaoTokens(code);
-    userSub = await util.getKakaoIdentification(tokens.accessToken);
-  } else if (loginType === "naver") {
-    tokens = await util.getNaverTokens(code);
-    userSub = await util.getNaverIdentification(tokens.accessToken);
-  } else {
-    return res.status(400).json({ message: "잘못된 로그인 수단입니다." });
+  try {
+    if (loginType === "google") {
+      tokens = await util.getGoogleTokens(code);
+      userSub = await util.getGoogleIdentification(tokens.accessToken);
+    } else if (loginType === "kakao") {
+      tokens = await util.getKakaoTokens(code);
+      userSub = await util.getKakaoIdentification(tokens.accessToken);
+    } else if (loginType === "naver") {
+      tokens = await util.getNaverTokens(code);
+      userSub = await util.getNaverIdentification(tokens.accessToken);
+    } else {
+      return res.status(400).json({ message: "잘못된 로그인 수단입니다." });
+    }
+  } catch (e) {
+    throw e;
   }
 
   //userSub 정보로 db에서 유저 아이디 조회

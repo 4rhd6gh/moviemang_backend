@@ -79,23 +79,18 @@ export async function getPlayListCount(userSub) {
 
 export async function deletePlMovie(playlistId, tm_id) {
   const query = "DELETE FROM tb_plmovie WHERE playlistId = ? AND tm_id = ?";
-  return db
-    .execute(query, [playlistId, tm_id])
-    .then((result) => result[0][0].cnt);
+  return db.execute(query, [playlistId, tm_id]).then((result) => result[0][0]);
 }
 
-export async function likePlaylist(playlistId, userSub) {
-  const query =
-    "INSERT INTO tb_playlist_like ( playlistId, userSub ) VALUES (?, ?)";
-  return db
-    .execute(query, [playlistId, userSub])
-    .then((result) => result[0][0].cnt);
+export async function getPlayListById(playlistId) {
+  const query = "SELECT * FROM tb_playlist WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0][0]);
 }
 
-export async function unlikePlaylist(playlistId, userSub) {
+export async function getLikeStatus(playlistId, userSub) {
   const query =
-    "DELETE FROM tb_playlist_like WHERE playlistId = ? AND userSub = ?";
+    "SELECT * FROM tb_playlist_like WHERE playlistId = ? AND userSub = ?";
   return db
     .execute(query, [playlistId, userSub])
-    .then((result) => result[0][0].cnt);
+    .then((result) => result[0][0]);
 }
