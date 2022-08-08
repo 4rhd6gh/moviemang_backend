@@ -8,15 +8,11 @@ export async function getPlayListLikeOrder() {
 export async function likePlaylist(playlistId, userSub) {
   const query =
     "INSERT INTO tb_playlist_like ( playlistId, userSub ) VALUES (?, ?)";
-  return db
-    .execute(query, [playlistId, userSub])
-    .then((result) => result[0][0].cnt);
+  return db.execute(query, [playlistId, userSub]);
 }
 
 export async function unlikePlaylist(playlistId, userSub) {
   const query =
     "DELETE FROM tb_playlist_like WHERE playlistId = ? AND userSub = ?";
-  return db
-    .execute(query, [playlistId, userSub])
-    .then((result) => result[0][0].cnt);
+  return db.execute(query, [playlistId, userSub]);
 }
