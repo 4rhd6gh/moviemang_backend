@@ -86,6 +86,12 @@ export async function getPlayList(req, res) {
       );
       playList[i].tags = playListTag;
     }
+    for (let i = 0; i < playList.length; i++) {
+      const playListLike = await myplaylistModel.getLikeCount(
+        playList[i].playlistId
+      );
+      playList[i].like = playListLike;
+    }
   }
   return res.status(200).json({
     totalCount,

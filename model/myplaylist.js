@@ -147,3 +147,9 @@ export async function updatePlayList(
     throw err;
   }
 }
+
+export async function getLikeCount(playlistId) {
+  const query =
+    "SELECT COUNT(*) AS cnt FROM tb_playlist_like WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0][0].cnt);
+}
