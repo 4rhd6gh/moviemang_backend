@@ -1,8 +1,9 @@
 import { db } from "./database.js";
 
 export async function getPlayListLikeOrder() {
-  const query = "SELECT * FROM tb_playlist ORDER BY like DESC";
-  return db.execute(query, [userId]).then((result) => result[0][0]);
+  const query =
+    "SELECT A.playlistId, A.playlistTitle, B.nickname, A.userSub FROM tb_playlist A left join tb_user B on A.userSub=B.userSub where playlistId in (select playlistId from (select playlistId, count(*) as CNT from tb_playlist_like group by playlistId ORDER by CNT DESC LIMIT 4) as temp)";
+  return db.execute(query).then((result) => result[0]);
 }
 
 export async function likePlaylist(playlistId, userSub) {
