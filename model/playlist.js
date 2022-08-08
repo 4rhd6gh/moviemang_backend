@@ -16,3 +16,9 @@ export async function unlikePlaylist(playlistId, userSub) {
     "DELETE FROM tb_playlist_like WHERE playlistId = ? AND userSub = ?";
   return db.execute(query, [playlistId, userSub]);
 }
+
+export async function getPopularTag() {
+  const query =
+    "SELECT tagName, count(*) as CNT FROM tb_playlist_tag GROUP BY tagName ORDER BY CNT DESC LIMIT 0,8";
+  return db.execute(query).then((result) => result[0]);
+}

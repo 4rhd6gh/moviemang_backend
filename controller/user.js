@@ -13,7 +13,6 @@ export async function updateNickname(req, res) {
 }
 
 export async function getPlaylistTags(req, res) {
-  const { playlistId } = req.params;
   const userSub = util.getUserSubFormToken(req);
   const tags = await userModel.getPlaylistTags(userSub);
   return res.status(200).json({

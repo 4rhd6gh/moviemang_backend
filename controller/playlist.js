@@ -22,3 +22,10 @@ export async function unlikePlaylist(req, res) {
   await playlistModel.unlikePlaylist(playlistId, userSub);
   res.status(204).json({ message: `좋아요 취소 완료` });
 }
+
+export async function getPopularTag(req, res) {
+  const popularTag = await playlistModel.getPopularTag();
+  return res.status(200).json({
+    popularTag,
+  });
+}
