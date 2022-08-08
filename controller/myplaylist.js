@@ -124,3 +124,23 @@ export async function getPlayListById(req, res) {
     message: `playlist를 조회 성공`,
   });
 }
+
+export async function deletePlayListById(req, res) {
+  const { playlistId } = req.params;
+  await myplaylistModel.deletePlayListById(playlistId);
+  await myplaylistModel.deletePlayListMovie(playlistId);
+  await myplaylistModel.deletePlayListTag(playlistId);
+  await myplaylistModel.deleteLikeStatus(playlistId);
+  res.status(204).json({ message: `삭제 완료` });
+}
+
+export async function updatePlayList(req, res) {
+  const { playlistId, playlistTitle, playlistDesc, tags } = req.body;
+  await myplaylistModel.updatePlayList(
+    playlistId,
+    playlistTitle,
+    playlistDesc,
+    tags
+  );
+  res.status(204).json({ message: `수정 완료` });
+}

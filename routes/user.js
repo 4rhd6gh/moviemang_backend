@@ -4,6 +4,6 @@ import * as userController from "../controller/user.js";
 const router = express.Router();
 
 router.put("/nickname", userController.updateNickname);
-router.put("/like", userController.updateLike);
+router.get("/playlistTags", userController.getPlaylistTags);
 
 export default router;

@@ -32,7 +32,13 @@ router.post("/movie", myplaylistController.createPlMovie);
 router.delete("/movie", myplaylistController.deletePlMovie);
 router.get("/playlist", myplaylistController.getPlayList);
 router.get("/playlist/:playlistId", myplaylistController.getPlayListById);
+router.delete("/playlist/:playlistId", myplaylistController.deletePlayListById);
 router.get("/playlistForCreate", myplaylistController.getPlayListForCreate);
+router.put(
+  "playlist/:playlistId",
+  validateCreatePlaylist,
+  myplaylistController.updatePlayList
+);
 router.get("/tag", myplaylistController.getTags);
 
 export default router;

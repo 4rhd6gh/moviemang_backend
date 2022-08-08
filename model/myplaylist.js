@@ -94,3 +94,56 @@ export async function getLikeStatus(playlistId, userSub) {
     .execute(query, [playlistId, userSub])
     .then((result) => result[0][0]);
 }
+
+export async function deletePlayListById(playlistId) {
+  const query = "DELETE FROM tb_playlist WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0][0]);
+}
+
+export async function deletePlayListMovie(playlistId) {
+  const query = "DELETE FROM tb_plmovie WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0][0]);
+}
+
+export async function deletePlayListTag(playlistId) {
+  const query = "DELETE FROM tb_playlist_tag WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0][0]);
+}
+
+export async function deleteLikeStatus(playlistId) {
+  const query = "DELETE FROM tb_playlist_like WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0][0]);
+}
+
+export async function updatePlayList(
+  playlistId,
+  playlistTitle,
+  playlistDesc,
+  tags
+) {
+  const query =
+    "UPDATE tb_playlist SET playlistTitle = ?, playlistDesc = ?, updated = NOW() WHERE playlistId = ?";
+
+  try {
+    await db.query("START TRANSACTION");
+    const insId = await db.query(query, [
+      playlistId,
+      userSub,
+      playlistTitle,
+      playlistDesc,
+    ]);
+    await db.query("DELETE FROM tb_playlist_tag WHERE playlistId = ?", [
+      playlistId,
+    ]);
+    await db.query(
+      "INSERT INTO tb_playlist_tag ( playlistId, tagName, created, updated ) VALUES ?",
+      [tags.map((tag) => [playlistId, tag, new Date(), new Date()])]
+    );
+    await db.query("COMMIT");
+    return insId;
+  } catch (err) {
+    console.log(err);
+    await db.query("ROLLBACK");
+    throw err;
+  }
+}

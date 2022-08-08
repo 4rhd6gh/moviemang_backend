@@ -12,12 +12,11 @@ export async function updateNickname(req, res) {
   });
 }
 
-export async function updateLike(req, res) {
+export async function getPlaylistTags(req, res) {
+  const { playlistId } = req.params;
   const userSub = util.getUserSubFormToken(req);
-  const { like } = req.body;
-  const updated = await userModel.updateLike(like, userSub);
+  const tags = await userModel.getPlaylistTags(userSub);
   return res.status(200).json({
-    like,
-    message: `좋아요가 수정되었습니다.`,
+    tags,
   });
 }
