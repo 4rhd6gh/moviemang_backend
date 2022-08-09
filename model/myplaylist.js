@@ -119,18 +119,20 @@ export async function updatePlayList(
   playlistId,
   playlistTitle,
   playlistDesc,
-  tags
+  tags,
+  userSub
 ) {
+  console.log("updateplaylist");
   const query =
-    "UPDATE tb_playlist SET playlistTitle = ?, playlistDesc = ?, updated = NOW() WHERE playlistId = ?";
+    "UPDATE tb_playlist SET playlistTitle = ?, playlistDesc = ?, updated = NOW() WHERE playlistId = ? and userSub = ?";
 
   try {
     await db.query("START TRANSACTION");
     const insId = await db.query(query, [
-      playlistId,
-      userSub,
       playlistTitle,
       playlistDesc,
+      playlistId,
+      userSub,
     ]);
     await db.query("DELETE FROM tb_playlist_tag WHERE playlistId = ?", [
       playlistId,
@@ -142,7 +144,6 @@ export async function updatePlayList(
     await db.query("COMMIT");
     return insId;
   } catch (err) {
-    console.log(err);
     await db.query("ROLLBACK");
     throw err;
   }

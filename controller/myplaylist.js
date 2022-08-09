@@ -142,11 +142,13 @@ export async function deletePlayListById(req, res) {
 
 export async function updatePlayList(req, res) {
   const { playlistId, playlistTitle, playlistDesc, tags } = req.body;
+  const userSub = util.getUserSubFormToken(req);
   await myplaylistModel.updatePlayList(
     playlistId,
     playlistTitle,
     playlistDesc,
-    tags
+    tags,
+    userSub
   );
   res.status(204).json({ message: `수정 완료` });
 }

@@ -35,7 +35,7 @@ router.get("/playlist/:playlistId", myplaylistController.getPlayListById);
 router.delete("/playlist/:playlistId", myplaylistController.deletePlayListById);
 router.get("/playlistForCreate", myplaylistController.getPlayListForCreate);
 router.put(
-  "playlist/:playlistId",
+  "/playlist",
   validateCreatePlaylist,
   myplaylistController.updatePlayList
 );
