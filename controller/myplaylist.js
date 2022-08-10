@@ -140,15 +140,17 @@ export async function deletePlayListById(req, res) {
   res.status(204).json({ message: `삭제 완료` });
 }
 
-export async function updatePlayList(req, res) {
-  const { playlistId, playlistTitle, playlistDesc, tags } = req.body;
-  const userSub = util.getUserSubFormToken(req);
-  await myplaylistModel.updatePlayList(
+export async function updatePlayListContents(req, res) {
+  const { playlistId, playlistTitle, playlistDesc } = req.body;
+  await myplaylistModel.updatePlayListContents(
     playlistId,
     playlistTitle,
-    playlistDesc,
-    tags,
-    userSub
+    playlistDesc
   );
+  res.status(204).json({ message: `수정 완료` });
+}
+export async function updatePlayListTags(req, res) {
+  const { playlistId, tags } = req.body;
+  await myplaylistModel.updatePlayList(playlistId, tags);
   res.status(204).json({ message: `수정 완료` });
 }

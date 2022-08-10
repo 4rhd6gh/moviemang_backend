@@ -18,6 +18,22 @@ const validateCreatePlaylist = [
     .withMessage("하나 이상의 태그를 선택해야 합니다."),
 ];
 
+const validateUpdatePlaylistContents = [
+  body("playlistTitle")
+    .notEmpty()
+    .withMessage("플레이리스트 제목을 입력해야합니다."),
+  body("playlistDesc")
+    .notEmpty()
+    .withMessage("플레이리스트에 대한 설명이 필요합니다."),
+];
+
+const validateUpdatePlaylistTags = [
+  body("tags")
+    .isArray()
+    .notEmpty()
+    .withMessage("하나 이상의 태그를 선택해야 합니다."),
+];
+
 //token 유효성 검사
 router.use((req, res, next) => {
   util.authenticateToken(req, res, next);
@@ -35,9 +51,14 @@ router.get("/playlist/:playlistId", myplaylistController.getPlayListById);
 router.delete("/playlist/:playlistId", myplaylistController.deletePlayListById);
 router.get("/playlistForCreate", myplaylistController.getPlayListForCreate);
 router.put(
-  "/playlist",
-  validateCreatePlaylist,
-  myplaylistController.updatePlayList
+  "/playlist/contents",
+  validateUpdatePlaylistContents,
+  myplaylistController.updatePlayListContents
+);
+router.put(
+  "/playlist/tags",
+  validateUpdatePlaylistTags,
+  myplaylistController.updatePlayListTags
 );
 router.get("/tag", myplaylistController.getTags);
 

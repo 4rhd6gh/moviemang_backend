@@ -7,6 +7,6 @@ export async function updateNickname(nickname, userSub) {
 
 export async function getPlaylistTags(userSub) {
   const query =
-    "select tagName, count(*) as CNT from tb_playlist_tag where playlistId in (select `playlistId` from tb_playlist where userSub = ? ) group by tagName order by CNT desc";
+    "select tagName, count(*) as CNT from tb_playlist_tag where playlistId in (select playlistId from tb_playlist where userSub = ? ) group by tagName order by CNT desc";
   return db.execute(query, [userSub]).then((result) => result[0]);
 }
