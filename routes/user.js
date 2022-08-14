@@ -5,5 +5,7 @@ const router = express.Router();
 
 router.put("/nickname", userController.updateNickname);
 router.get("/playlistTags", userController.getPlaylistTags);
+router.post("/playlistBookmark", userController.createPlaylistBookmark);
+router.delete("/playlistBookmark", userController.deletePlaylistBookmark);
 
 export default router;
