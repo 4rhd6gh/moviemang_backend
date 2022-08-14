@@ -23,3 +23,9 @@ export async function getPopularTag() {
     "SELECT tagName, count(*) as CNT FROM tb_playlist_tag GROUP BY tagName ORDER BY CNT DESC LIMIT 0,8";
   return db.execute(query).then((result) => result[0]);
 }
+
+export async function getPlaylistBookmark(userSub, page, limit) {
+  const query =
+    "SELECT * FROM tb_playlist WHERE playlistId in ( select playlistId from tb_playlist_bookmark where userSub=? ) ORDER BY created DESC LIMIT ?,?";
+  return db.execute(query, [userSub, page, limit]).then((result) => result[0]);
+}

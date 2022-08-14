@@ -30,7 +30,8 @@ export async function deletePlaylistBookmark(playlistId, userSub) {
   return db.execute(query, [playlistId, userSub]).then((result) => result[0]);
 }
 
-export async function getPlaylistBookmark(userSub) {
-  const query = "SELECT * FROM tb_playlist_bookmark WHERE userSub = ?";
-  return db.execute(query, [userSub]).then((result) => result[0]);
+export async function getPlaylistBookmarkCount(userSub) {
+  const query =
+    "SELECT count(*) as CNT FROM tb_playlist_bookmark WHERE userSub = ?";
+  return db.execute(query, [userSub]).then((result) => result[0][0].CNT);
 }

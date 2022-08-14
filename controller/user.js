@@ -1,5 +1,7 @@
 import "dotenv/config";
 import * as userModel from "../model/user.js";
+import * as playlistModel from "../model/playlist.js";
+import * as myplaylistModel from "../model/myplaylist.js";
 import * as util from "../util/util.js";
 
 export async function updateNickname(req, res) {
@@ -42,16 +44,20 @@ export async function deletePlaylistBookmark(req, res) {
     bookmark,
   });
 }
-
+//TODO 북마크에 맞게 수정 필요
 export async function getPlaylistBookmark(req, res) {
   const userSub = util.getUserSubFormToken(req);
 
   const { page, limit } = req.query;
 
-  const totalCount = await myplaylistModel.getPlayListCount(userSub);
+  const totalCount = await playlistModel.getPlaylistBookmarkCount(userSub);
 
   let newPage = page;
-  let playList = await myplaylistModel.getPlayList(userSub, newPage, limit);
+  let playList = await playlistModel.getPlaylistBookmark(
+    userSub,
+    newPage,
+    limit
+  );
 
   if (playList.length > 0) {
     for (let i = 0; i < playList.length; i++) {
