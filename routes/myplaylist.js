@@ -58,7 +58,7 @@ router.put(
 router.delete(
   "/playlist/tags",
   validateUpdatePlaylistTags,
-  myplaylistController.updatePlayListTags
+  myplaylistController.deletePlayListTags
 );
 router.post(
   "/playlist/tags",
