@@ -154,3 +154,9 @@ export async function updatePlayListTags(req, res) {
   await myplaylistModel.updatePlayList(playlistId, tags);
   res.status(204).json({ message: `수정 완료` });
 }
+
+export async function deletePlayListTags(req, res) {
+  const { playlistId, tags } = req.body;
+  await myplaylistModel.deletePlayListTags(playlistId, tags);
+  res.status(204).json({ message: `수정 완료` });
+}

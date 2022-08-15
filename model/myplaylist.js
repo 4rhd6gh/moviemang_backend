@@ -128,22 +128,16 @@ export async function updatePlayListContents(
 }
 
 export async function updatePlayListTags(playlistId, tags) {
-  console.log("updateplaylist");
-  const query = "DELETE FROM tb_playlist_tag WHERE playlistId = ?";
-
-  try {
-    await db.query("START TRANSACTION");
-    const insId = await db.query(query, [playlistId]);
-    await db.query(
+  return db
+    .execute(
       "INSERT INTO tb_playlist_tag ( playlistId, tagName, created, updated ) VALUES ?",
       [tags.map((tag) => [playlistId, tag, new Date(), new Date()])]
-    );
-    await db.query("COMMIT");
-    return insId;
-  } catch (err) {
-    await db.query("ROLLBACK");
-    throw err;
-  }
+    )
+    .then((result) => result[0][0]);
+}
+export async function deletePlayListTags(playlistId) {
+  const query = "DELETE FROM tb_playlist_tag WHERE playlistId = ?";
+  return db.execute(query, [playlistId]).then((result) => result[0][0]);
 }
 
 export async function getLikeCount(playlistId) {
