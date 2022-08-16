@@ -129,7 +129,7 @@ export async function updatePlayListContents(
 
 export async function updatePlayListTags(playlistId, tags) {
   return db
-    .execute(
+    .query(
       "INSERT INTO tb_playlist_tag ( playlistId, tagName, created, updated ) VALUES ?",
       [tags.map((tag) => [playlistId, tag, new Date(), new Date()])]
     )
