@@ -50,7 +50,7 @@ export async function getPlaylistBookmark(req, res) {
 
   const { page, limit } = req.query;
 
-  const totalCount = await playlistModel.getPlaylistBookmarkCount(userSub);
+  const totalCount = await userModel.getPlaylistBookmarkCount(userSub);
 
   let newPage = page;
   let playList = await playlistModel.getPlaylistBookmark(
